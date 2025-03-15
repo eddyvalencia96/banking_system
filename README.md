@@ -19,7 +19,7 @@ This repository contains a RESTful API for a banking system that allows users to
 
 1. Clone this repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/eddyvalencia96/banking_system
    cd banking-system
    ```
 
@@ -99,12 +99,3 @@ The application uses a relational database with the following main tables:
 - `users` - Stores user information
 - `accounts` - Stores account details
 - `transactions` - Records all transactions
-
-## Development
-
-### Running docker-compose
-
-To run the application with Docker:
-
-1. Run in terminal:
-    docker-compose up --build
