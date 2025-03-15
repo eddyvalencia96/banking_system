@@ -41,7 +41,7 @@ POST /login
 Request body:
 ```json
 {
-  "email": "edvalencia",
+  "username": "edvalencia",
   "password": "960919edval"
 }
 ```
@@ -62,7 +62,7 @@ GET /api/accounts/{id}
 
 #### Transfer money
 ```
-POST /api/transactions/transfer
+POST /api/transactions
 ```
 Request body:
 ```json
@@ -76,7 +76,7 @@ Request body:
 
 #### Get transaction history
 ```
-GET /api/transactions/history/{accountId}
+GET /api/transactions/{accountId}
 ```
 
 ## Environment Variables
