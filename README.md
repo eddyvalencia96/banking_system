@@ -53,6 +53,14 @@ Request body:
 POST /api/accounts
 ```
 
+Request body:
+```json
+{
+  "name": "Jack Smith",
+  "initial_balance": 5000
+}
+```
+
 #### Get account by ID
 ```
 GET /api/accounts/{id}
@@ -67,10 +75,9 @@ POST /api/transactions
 Request body:
 ```json
 {
-  "fromAccountId": "123456",
-  "toAccountId": "789012",
-  "amount": 75.00,
-  "description": "Rent payment"
+  "from_account": "123456",
+  "to_account": "789012",
+  "amount": 3000
 }
 ```
 

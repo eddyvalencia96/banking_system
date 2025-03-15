@@ -12,9 +12,11 @@ services:
       - DB_HOST=db
       - DB_PORT=5432
       - NATS_URL=nats://nats:4222
+      - REDIS_ADDR=redis:6379
     depends_on:
       - db
       - nats
+      - redis
 
   db:
     image: postgres:13
@@ -34,6 +36,11 @@ services:
       - "4222:4222"
       - "8222:8222"
     command: ["-js"]
+  
+  redis:
+    image: redis:6.2
+    ports:
+      - "6379:6379"
 
 volumes:
   postgres_data:

@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 
 	"bff/account"
@@ -37,8 +38,22 @@ func main() {
 	accountRepo := account.NewAccountRepository()
 	transactionRepo := transaction.NewTransactionRepository()
 
-	accountService := account.NewAccountService(*accountRepo)
-	transactionService := transaction.NewTransactionService(*transactionRepo, *accountRepo, natsClient)
+	redisAddr := os.Getenv("REDIS_ADDR")
+	if redisAddr == "" {
+		log.Fatal("REDIS_ADDR environment variable is not set")
+	}
+
+	cacheDuration := 5
+	redisDuration := os.Getenv("REDIS_DURATION")
+	if redisDuration != "" {
+		cacheDuration, err = strconv.Atoi(redisDuration)
+		if err != nil {
+			log.Fatalf("Error parsing REDIS_DURATION: %v", err)
+		}
+	}
+
+	accountService := account.NewAccountService(*accountRepo, redisAddr, cacheDuration)
+	transactionService := transaction.NewTransactionService(*transactionRepo, *accountRepo, natsClient, redisAddr, cacheDuration)
 
 	accountHandler := account.NewAccountHandler(*accountService)
 	transactionHandler := transaction.NewTransactionHandler(*transactionService)

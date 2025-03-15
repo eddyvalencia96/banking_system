@@ -13,11 +13,13 @@ CREATE TABLE accounts (
 );
 
 CREATE TABLE transactions (
-    id SERIAL PRIMARY KEY,
-    account_id INTEGER NOT NULL,
-    amount INTEGER NOT NULL,
-    transaction_date TIMESTAMP NOT NULL,
-    FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE
+    transaction_id SERIAL PRIMARY KEY,
+    from_account INT NOT NULL,
+    to_account INT NOT NULL,
+    amount INT NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (from_account) REFERENCES accounts(id),
+    FOREIGN KEY (to_account) REFERENCES accounts(id)
 );
 
 INSERT INTO users ("username", "password")
@@ -28,4 +30,3 @@ GRANT ALL PRIVILEGES ON DATABASE banking_system TO "bs_ed";
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE accounts TO "bs_ed";
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE transactions TO bs_ed;
 GRANT USAGE, SELECT ON SEQUENCE accounts_id_seq TO bs_ed;
-GRANT USAGE, SELECT ON SEQUENCE transactions_id_seq TO bs_ed;

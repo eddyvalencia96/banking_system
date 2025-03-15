@@ -59,6 +59,20 @@ func (r *AccountRepository) GetAccountBalance(id int) (int, error) {
 	return balance, nil
 }
 
+// UpdateAccountBalance modifies the balance of an account identified by the provided ID.
+// It adds the amount to the current balance (use negative amount for subtraction).
+// It returns the new balance and nil error if successful, or 0 and an error if the account is not found
+// or if any other database error occurs.
+func (r *AccountRepository) UpdateAccountBalance(id int, amount int) (int, error) {
+	var newBalance int
+	query := `UPDATE accounts SET balance = balance + $2 WHERE id=$1 RETURNING balance`
+	err := r.DB.QueryRow(query, id, amount).Scan(&newBalance)
+	if err != nil {
+		return 0, err
+	}
+	return newBalance, nil
+}
+
 func (r *AccountRepository) ValidateUserPassword(username, password string) (bool, error) {
 	var storedPassword string
 	query := `SELECT password FROM users WHERE "username"=$1`

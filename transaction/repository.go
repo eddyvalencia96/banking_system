@@ -29,7 +29,6 @@ func NewTransactionRepository() *TransactionRepository {
 }
 
 func (r *TransactionRepository) TransferMoney(transaction Transaction) (Transaction, error) {
-	// Implementación de la lógica para transferir dinero entre cuentas
 	query := `INSERT INTO transactions (from_account, to_account, amount, timestamp) VALUES ($1, $2, $3, $4) RETURNING transaction_id`
 	err := r.DB.QueryRow(query, transaction.FromAccount, transaction.ToAccount, transaction.Amount, transaction.Timestamp).Scan(&transaction.TransactionID)
 	if err != nil {
